@@ -178,7 +178,7 @@ void set_ip_range() {
         //_tprintf(TEXT("START-ADDRESS\t\tEND-ADDRESS\t\tDRIVER\n"));      
         for (i=0; i < cDrivers; i++ ){
             pos += sprintf(info_buffer + pos, "0x%p\t0x%p\t%s\n", drivers[i], ((UINT64)drivers[i]) + ModuleInfo->Modules[i].ImageSize, ModuleInfo->Modules[i].FullPathName+ModuleInfo->Modules[i].OffsetToFileName);
-            if(strstr(ModuleInfo->Modules[i].FullPathName,"nyx_test") > 0 ) {
+            if(strstr(ModuleInfo->Modules[i].FullPathName,"vuln_driver") > 0 ) {
                 uint64_t buffer[3];
                 buffer[0] = drivers[i];
                 buffer[1] = drivers[i] + ModuleInfo->Modules[i].ImageSize;
