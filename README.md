@@ -16,6 +16,10 @@ As per kAFL install the KVM-Nyx host kernel
 
 Build and install kAFL as per the README (using kafl/install.sh)
 
+## Build kafl.qemu
+
+Clone kafl.qemu repo and compile by running `./compile_qemu_nyx.sh static` or similar.
+
 ## Running the example Windows target
 
 The example windows target is a driver included in windows_x86_64\src\vuln_driver, you can compile and install this driver onto your target.
