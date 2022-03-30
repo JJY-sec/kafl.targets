@@ -18,7 +18,7 @@ Build and install kAFL as per the README (using kafl/install.sh)
 
 ## Build kafl.qemu
 
-Clone kafl.qemu repo and compile by running `./compile_qemu_nyx.sh static` or similar.
+Clone kafl.qemu repo (ensure its kafl_stable branch) and compile by running `./compile_qemu_nyx.sh static` or similar.
 
 ## Running the example Windows target
 
