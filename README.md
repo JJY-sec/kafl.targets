@@ -10,7 +10,8 @@ IntelPT capable processor
 
 ## Install Nyx kernel
 
-As per kAFL install the KVM-Nyx host kernel
+As per kAFL install the KVM-Nyx host kernel.
+Note upon installation and booting, you may need to hit `advanced boot options` or similar to load the kafl kernel instead of your normal linux kernel.
 
 ## Install kAFL
 
