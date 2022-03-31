@@ -30,8 +30,6 @@ Once converted, you can create the overlay image for it ("qemu-img create -f qco
 
 Now you can fuzz the target by going into kAFL, running `make env` as documented on kAFL's readme, and running `python3 kafl_fuzz.py -w ../output_fuzz --image ../disks/overlay_0.qcow2 -m 3000 --radamsa-path=../../Source/radamsa/bin/radamsa --qemu-path ~/Source/kafl.qemu/x86_64-softmmu/qemu-system-x86_64 --purge --seed-dir=../inputs --append ""`
 
-You may need to modify kafl.qemu/kafl/kafl_fuzzer/worker/qemu.py to not have the `-append` line when launching QEMU this way.
-
 Nyx will launch the qcow2 and run it until the handshake and snapshot hypercalls are encountered, then it will automatically enter fuzz-mode and you should see it fuzzing as per below 
 
 ![kafl_nyx](https://user-images.githubusercontent.com/16039802/160758127-6d195e9a-b08c-4317-aeb1-2f356f44ff52.png)
