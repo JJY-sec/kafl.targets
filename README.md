@@ -28,7 +28,7 @@ Your target must eventually be a QEMU qcow2 image, but I recommend starting with
 
 Once converted, you can create the overlay image for it ("qemu-img create -f qcow2 -b windows.qcow2 overlay_0.qcow2).
 
-Now you can fuzz the target by going into kAFL, running `make env` as documented on kAFL's readme, and running `python3 kafl_fuzz.py -w ../output_fuzz --image ../disks/overlay_0.qcow2 -m 3000 --radamsa-path=../../Source/radamsa/bin/radamsa --qemu-path ~/Source/kafl.qemu/x86_64-softmmu/qemu-system-x86_64 --purge`
+Now you can fuzz the target by going into kAFL, running `make env` as documented on kAFL's readme, and running `python3 kafl_fuzz.py -w ../output_fuzz --image ../disks/overlay_0.qcow2 -m 3000 --radamsa-path=../../Source/radamsa/bin/radamsa --qemu-path ~/Source/kafl.qemu/x86_64-softmmu/qemu-system-x86_64 --purge --seed-dir=../inputs --append ""`
 
 You may need to modify kafl.qemu/kafl/kafl_fuzzer/worker/qemu.py to not have the `-append` line when launching QEMU this way.
 
