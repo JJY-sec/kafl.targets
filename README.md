@@ -12,6 +12,7 @@ IntelPT capable processor
 
 As per kAFL install the KVM-Nyx host kernel.
 Note upon installation and booting, you may need to hit `advanced boot options` or similar to load the kafl kernel instead of your normal linux kernel.
+Also note that I tested this by installing the host kernel on-top of a default Ubuntu 20.04.4 LTS installation.
 
 ## Install kAFL
 
