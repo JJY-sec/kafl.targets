@@ -20,12 +20,6 @@
 #ifndef int32_t
 #define int32_t INT32
 #endif
-#ifndef uint32_t
-#define uint32_t UINT32
-#endif
-#ifndef u_long
-#define u_long UINT64
-#endif
 #ifndef uint8_t
 #define uint8_t UINT8
 #endif
@@ -44,7 +38,7 @@
 #define HYPERCALL_KAFL_SUBMIT_KASAN			7
 #define HYPERCALL_KAFL_PANIC				8
 #define HYPERCALL_KAFL_KASAN				9
-#define HYPERCALL_KAFL_LOCK					10 /* deprecated */
+#define HYPERCALL_KAFL_LOCK					10
 #define HYPERCALL_KAFL_INFO					11 /* deprecated */
 #define HYPERCALL_KAFL_NEXT_PAYLOAD			12
 #define HYPERCALL_KAFL_PRINTF				13
@@ -58,7 +52,7 @@
 /* 19 is already used for exit reason KVM_EXIT_KAFL_TOPA_MAIN_FULL */
 #define HYPERCALL_KAFL_USER_ABORT			20
 #define HYPERCALL_KAFL_TIMEOUT				21 /* deprecated */
-#define HYPERCALL_KAFL_RANGE_SUBMIT		29
+#define HYPERCALL_KAFL_RANGE_SUBMIT			29
 #define HYPERCALL_KAFL_REQ_STREAM_DATA		30
 #define HYPERCALL_KAFL_PANIC_EXTENDED		32
 
@@ -80,7 +74,7 @@
 #define HYPERCALL_KAFL_NESTED_CONFIG		(1 | HYPERTRASH_HYPERCALL_MASK)
 #define HYPERCALL_KAFL_NESTED_ACQUIRE		(2 | HYPERTRASH_HYPERCALL_MASK)
 #define HYPERCALL_KAFL_NESTED_RELEASE		(3 | HYPERTRASH_HYPERCALL_MASK)
-#define HYPERCALL_KAFL_NESTED_HPRINTF		(4 | HYPERTRASH_HYPERCALL_MASK)gre
+#define HYPERCALL_KAFL_NESTED_HPRINTF		(4 | HYPERTRASH_HYPERCALL_MASK)
 
 #define HPRINTF_MAX_SIZE					0x1000					/* up to 4KB hprintf strings */
 
@@ -139,10 +133,10 @@ static void hprintf(const char * format, ...){
 #define NYX_HOST_MAGIC  0x4878794e
 #define NYX_AGENT_MAGIC 0x4178794e
 
-#define NYX_HOST_VERSION 1
+#define NYX_HOST_VERSION 2
 #define NYX_AGENT_VERSION 1
 
-typedef struct host_config_s {
+typedef struct {
 	uint32_t host_magic;
 	uint32_t host_version;
 	uint32_t bitmap_size;
@@ -152,7 +146,7 @@ typedef struct host_config_s {
 	/* more to come */
 } __attribute__((packed)) host_config_t;
 
-typedef struct agent_config_s {
+typedef struct {
 	uint32_t agent_magic;
 	uint32_t agent_version;
 	uint8_t agent_timeout_detection;
@@ -167,17 +161,17 @@ typedef struct agent_config_s {
 	/* more to come */
 } __attribute__((packed)) agent_config_t;
 
-typedef struct kafl_dump_file_s {
+typedef struct {
 	uint64_t file_name_str_ptr;
 	uint64_t data_ptr;
 	uint64_t bytes;
 	uint8_t append;
 } __attribute__((packed)) kafl_dump_file_t;
 
-typedef struct req_data_bulk_s {
+typedef struct {
 	char file_name[256];
 	uint64_t num_addresses;
 	uint64_t addresses[479];
-} req_data_bulk_t;
+} __attribute__((packed)) req_data_bulk_t;
 
 #endif /* NYX_API_H */
