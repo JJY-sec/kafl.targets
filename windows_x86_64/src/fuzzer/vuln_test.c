@@ -97,7 +97,7 @@ void init_agent_handshake() {
 	if (host_config.host_magic != NYX_HOST_MAGIC ||
 	    host_config.host_version != NYX_HOST_VERSION) {
 		hprintf("host_config magic/version mismatch!\n");
-		habort("GET_HOST_CNOFIG magic/version mismatch!\n");
+		habort("GET_HOST_CONFIG magic/version mismatch!\n");
 	}
 	hprintf("\thost_config.bitmap_size: 0x%lx\n", host_config.bitmap_size);
 	hprintf("\thost_config.ijon_bitmap_size: 0x%lx\n", host_config.ijon_bitmap_size);
@@ -178,7 +178,7 @@ void set_ip_range() {
         //_tprintf(TEXT("START-ADDRESS\t\tEND-ADDRESS\t\tDRIVER\n"));      
         for (i=0; i < cDrivers; i++ ){
             pos += sprintf(info_buffer + pos, "0x%p\t0x%p\t%s\n", drivers[i], ((UINT64)drivers[i]) + ModuleInfo->Modules[i].ImageSize, ModuleInfo->Modules[i].FullPathName+ModuleInfo->Modules[i].OffsetToFileName);
-            if(strstr(ModuleInfo->Modules[i].FullPathName,"vuln_driver") > 0 ) {
+            if(strstr(ModuleInfo->Modules[i].FullPathName,"ntoskrnl") > 0 ) {
                 uint64_t buffer[3];
                 buffer[0] = drivers[i];
                 buffer[1] = drivers[i] + ModuleInfo->Modules[i].ImageSize;
@@ -217,20 +217,6 @@ int main(int argc, char** argv)
     /* open vulnerable driver */
     HANDLE kafl_vuln_handle = NULL;
     BOOL status = -1;
-    kafl_vuln_handle = CreateFile((LPCSTR)"\\\\.\\testKafl",
-        GENERIC_READ | GENERIC_WRITE,
-        FILE_SHARE_READ | FILE_SHARE_WRITE,
-        NULL,
-        OPEN_EXISTING,
-        FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED,
-        NULL
-    );
-
-    if (kafl_vuln_handle == INVALID_HANDLE_VALUE) {
-        printf("[-] KAFL test: Cannot get device handle: 0x%X\n", GetLastError());
-        ExitProcess(0);
-    }
-
     init_agent_handshake();
 
     init_panic_handlers();
@@ -249,18 +235,7 @@ int main(int argc, char** argv)
 
     /* request new payload (*blocking*) */
     kAFL_hypercall(HYPERCALL_KAFL_ACQUIRE, 0); 
-
-    /* kernel fuzzing */
-    DeviceIoControl(kafl_vuln_handle,
-        IOCTL_KAFL_INPUT,
-        (LPVOID)(payload_buffer->data),
-        (DWORD)payload_buffer->size,
-        NULL,
-        0,
-        NULL,
-        NULL
-    );
-
+    hprintf("fuzz here");
     /* inform fuzzer about finished fuzzing iteration */
     // Will reset back to start of snapshot here
     kAFL_hypercall(HYPERCALL_KAFL_RELEASE, 0);

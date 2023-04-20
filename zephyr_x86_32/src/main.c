@@ -49,7 +49,7 @@ static void agent_init(void *panic_handler, void *kasan_handler)
 	if (host_config.host_magic != NYX_HOST_MAGIC ||
 	    host_config.host_version != NYX_HOST_VERSION) {
 		hprintf("host_config magic/version mismatch!\n");
-		habort("GET_HOST_CNOFIG magic/version mismatch!\n");
+		habort("GET_HOST_CONFIG magic/version mismatch!\n");
 	}
 	hprintf("\thost_config.bitmap_size: 0x%lx\n", host_config.bitmap_size);
 	hprintf("\thost_config.ijon_bitmap_size: 0x%lx\n", host_config.ijon_bitmap_size);
